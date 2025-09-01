@@ -1,0 +1,29 @@
+name: ui-agent            # CUDA 12.1 paring for Python 2.5 on conda
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pillow
+  - opencv-python-headless
+  - requests
+  - pytorch=2.5
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=12.1
+  - pip
+  - pip:
+      - transformers>=4.44.0
+      - accelerate>=0.33.0
+      - safetensors
+      - mss
+      - pyautogui
+      - pygetwindow
+      - pywin32
+      - pytesseract      # optional
+      - rich
+      - tqdm

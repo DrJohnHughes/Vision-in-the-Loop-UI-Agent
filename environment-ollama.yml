@@ -1,0 +1,21 @@
+name: ui-agent
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pillow
+  - opencv-python-headless
+  - requests
+  - pip
+  - pip:
+      - ollama>=0.3.0
+      - mss
+      - pyautogui
+      - pygetwindow
+      - pywin32
+      - pytesseract      # optional OCR (requires Tesseract binary if enabled)
+      - rich
+      - tqdm
