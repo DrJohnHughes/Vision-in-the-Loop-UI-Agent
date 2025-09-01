@@ -57,7 +57,7 @@ import torch; print("torch", torch.__version__, "| cuda:", torch.cuda.is_availab
 ```
 
 ### Proof of Concept (Notebook)
-See [01_screen_read_and_parse.ipynb](01_screen_read_and_parse.ipynb) for an example minimal loop (JSON):
+See [01_screen_read_and_parse.ipynb](notebooks/01_screen_read_and_parse.ipynb) for an example minimal loop (JSON):
 - capture → caption → action.
 
 ### Safety & Guardrails
@@ -128,7 +128,7 @@ Embodied AI agents go beyond simply processing data by learning, reasoning and i
 
 ### Proof of Concept 2: Exploring how redistricting impacts a location
 
-- [02_poc_ui_agent.ipynb](02_poc_ui_agent.ipynb)
+- [02_poc_ui_agent.ipynb](notebooks/02_poc_ui_agent.ipynb)
 
 ##### Sources
 - Election Commission PDFs contain redistricting maps, text, and tables
