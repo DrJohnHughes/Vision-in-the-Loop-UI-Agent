@@ -71,8 +71,8 @@ See [01_screen_read_and_parse.ipynb](notebooks/01_screen_read_and_parse.ipynb) f
 This repo ships a strict planner that forces **JSON-only** action outputs and a safe driver that executes an allow-listed subset of actions inside a focused window.
 
 ##### Files
-- `src/planner/policy.py` — extracts the first JSON block from an LLM reply, validates it against `{action,target,coords,text,keys}`, and converts bad plans to `{"action":"noop"}`.
-- `src/actions/driver.py` — deny-by-default action runner with a window sandbox and `--dry-run` behavior.
+- [src/planner/policy.py](src/planner/policy.py) — extracts the first JSON block from an LLM reply, validates it against `{action,target,coords,text,keys}`, and converts bad plans to `{"action":"noop"}`.
+- [src/actions/driver.py](src/actions/driver.py) — deny-by-default action runner with a window sandbox and `--dry-run` behavior.
 
 ##### Usage
 ```python
