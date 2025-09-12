@@ -6,6 +6,17 @@ A **vision-in-the-loop screen aware desktop agent** for Windows: reads screensho
 
 > **Status:** WIP (design + prototype). Early runs use LLaMA-3.2-Vision (HF / Ollama) + lightweight action tooling.
 
+##### Demo
+<video src="assets/demos/ui-agent-180s.mp4" width="100%" controls muted playsinline>
+  Your browser does not support the video tag.
+</video>
+
+#### What it does
+- Deny-by-default safety wrapper (allow-list + dry-run + JSON traces)
+- Parses screenshots → proposes JSON actions (click/type/hotkey)
+- Eval harness tracks compliance, over-refusal, jailbreak-rate, latency
+
+##### Architecture
 ![Architecture (Prototype)](assets/Vision-in-the-Loop-UI-Agent-Architecture-Dark.png)
 <sub><i>Pixels in → parsed UI state → JSON-only action → sandboxed driver with allow-list, dry-run, and logs.</i></sub>
 
