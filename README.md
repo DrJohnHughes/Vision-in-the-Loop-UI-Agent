@@ -56,9 +56,19 @@ jupyter lab
 import torch; print("torch", torch.__version__, "| cuda:", torch.cuda.is_available())
 ```
 
-### Proof of Concept (Notebook)
-See [01_screen_read_and_parse.ipynb](notebooks/01_screen_read_and_parse.ipynb) for an example minimal loop (JSON):
+### Proof of Concept (Notebooks)
+[01_screen_read_and_parse.ipynb](notebooks/01_screen_read_and_parse.ipynb)
+- Example minimal loop (JSON):
 - capture → caption → action.
+
+[02_poc_ui_agent.ipynb](notebooks/02_poc_ui_agent.ipynb)
+
+- Polices, guardrails and Safety Harness
+- Deny-by-default, allow-list, dry run, JSON traces
+- Safety and Metrics
+- Compliance, over-refusal, jailbreak-rate, latency
+- Eval Harness
+
 
 ### Safety & Guardrails
 
@@ -71,13 +81,15 @@ See [01_screen_read_and_parse.ipynb](notebooks/01_screen_read_and_parse.ipynb) f
 This repo ships a strict planner that forces **JSON-only** action outputs and a safe driver that executes an allow-listed subset of actions inside a focused window.
 
 ##### Files
-- [src/planner/policy.py](src/planner/policy.py) — extracts the first JSON block from an LLM reply, validates it against `{action,target,coords,text,keys}`, and converts bad plans to `{"action":"noop"}`.
 - [src/actions/driver.py](src/actions/driver.py) — deny-by-default action runner with a window sandbox and `--dry-run` behavior.
+- [src/eval/harness.py](src/eval/harness.py) — computes metrics and determines compliance with safety policy
+- [src/planner/policy.py](src/planner/policy.py) — extracts the first JSON block from an LLM reply, validates it against `{action,target,coords,text,keys}`, and converts bad plans to `{"action":"noop"}`.
 
 ##### Usage
 ```python
-from src.planner.policy import extract_and_validate_action
 from src.actions.driver import ActionDriver
+from src.eval.harness import run_items, compute_metrics, tail
+from src.planner.policy import extract_and_validate_action
 
 action = extract_and_validate_action(raw_text)   # raw LLM output → safe Action
 # Audit / Confirm / Auto
@@ -119,52 +131,25 @@ Embodied AI agents go beyond simply processing data by learning, reasoning and i
   - Sensitive data never leaves local machine
   - Vision LLM can interpret visual data such as maps or graphs to decode into structured descriptions that can be analyzed, compared, and visualized
   - Easy to extend with additional functionality such as a Q&A interface
-    - _“Which district is Woodland Hills now in?”_
+    - _“Which district is Woodland Hills now in after 2025 redistricting?”_
 
 - Investigate other open source models such as Qwen-VL to compare performance
 - Initial applications to include:
   - extracting information from PDFs
   - interacting with websites by filling forms, extracting data, etc
 
-### Proof of Concept 2: Exploring how redistricting impacts a location
-
-- [02_poc_ui_agent.ipynb](notebooks/02_poc_ui_agent.ipynb)
-
-##### Sources
-- Election Commission PDFs contain redistricting maps, text, and tables
-- Screenshots of local maps exported from websites or GIS tools
-- Access reference data such as census tract shapefiles, voting district shapefiles, demographic data
-
 ##### Pipeline
 - Image/Text Extraction using LLaMA3.2-Vision (via Ollama) to parse:
-   - Map images: detect district boundaries, labels, numbers
-   - Embedded text: OCR-style reading of district names, population counts, etc
 - Where possible make use of existing tools that can extract content from applications such as `pdfplumber` or `PyMuPDF` for PDFs.
 - Feed extracted text and embedded images to LLaMA Vision for interpretation
 
-##### Structure the Data
-
-Convert LLaMA’s extracted text into a structured JSON format. For example:
-```json
-{
-  "district": "CA-28",
-  "area": "North Los Angeles",
-  "changes": "Expanded west into Woodland Hills",
-  "population_shift": "+3.2%"
-}
-```
-##### Contextualize
-
-- Pass structured data back to LLaMA (or a second reasoning step) with a system prompt:
-  > Summarize how these redistricting changes affect north Los Angeles communities. Focus on Glendale, Burbank, North Hollywood, San Fernando Valley.
-
-#### Outputs
-- Readable summary (Markdown / plain text):
-  “District 30 now includes Glendale and parts of Burbank, while North Hollywood shifts into District 29.”
-- Comparison maps: overlay old vs. new boundaries (using geopandas + matplotlib).
-- Local relevance filter: only highlight districts overlapping your zip code.
-
-
+#### Metrics (WIP)
+| metric | p50 | p95 |
+|---|---:|---:|
+| first-token latency | — | — |
+| compliance (benign set) | — | — |
+| over-refusal | — | — |
+| jailbreak pass-rate | — | — |
 
 #### License: MIT
 
@@ -184,6 +169,10 @@ vision-in-the-loop-ui-agent/
 │  ├─ planner/      # prompts, JSON schema, loop policy
 │  └─ actions/      # click/keys abstractions
 ├─ assets/
+│  ├─ sample.html
+│  ├─ sample.png
+│  ├─ sample_filled.png
+│  └─ Vision-in-the-Loop-UI-Agent-Architecture.png
 ├─ environment-ollama.yml
 ├─ environment-hf.yml
 ├─ .gitignore
