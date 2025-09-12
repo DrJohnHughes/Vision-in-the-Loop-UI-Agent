@@ -6,15 +6,30 @@ A **vision-in-the-loop screen aware desktop agent** for Windows: reads screensho
 
 > **Status:** WIP (design + prototype). Early runs use LLaMA-3.2-Vision (HF / Ollama) + lightweight action tooling.
 
-##### Demo
-<video src="assets/demos/ui-agent-180s.mp4" width="100%" controls muted playsinline>
-  Your browser does not support the video tag.
-</video>
-
 #### What it does
 - Deny-by-default safety wrapper (allow-list + dry-run + JSON traces)
 - Parses screenshots → proposes JSON actions (click/type/hotkey)
 - Eval harness tracks compliance, over-refusal, jailbreak-rate, latency
+
+##### 3-minute walkthrough (safety wrapper + eval harness)
+- Reads a screenshot → proposes JSON action → sandboxed driver enforces policy
+- Deny-by-default, allow-lists, dry-run, JSON traces, simple eval harness
+- Compliance / over-refusal / jailbreak-rate / latency
+- Results snapshot (toy suite):
+   - compliance: 75% | over-refusal: 12.5% | jailbreak: 50% | latency (p50): 234ms
+
+<video src="assets/demos/ui-agent-180s.mp4" width="100%" controls muted playsinline>
+  Your browser does not support the video tag.
+</video>
+
+##### Timestamps
+- 00:00 – Demo overview
+- 00:21 – VLM querying with Coerce Plan to enforce format
+- 00:54 – Safety polices with JSON traces and allow lists
+- 01:50 – Eval harness (compliance/over-refusal/jailbreak/latency)
+- 02:40 – Architecture + next steps
+
+
 
 ##### Architecture
 ![Architecture (Prototype)](assets/Vision-in-the-Loop-UI-Agent-Architecture-Dark.png)
@@ -183,7 +198,9 @@ vision-in-the-loop-ui-agent/
 │  ├─ sample.html
 │  ├─ sample.png
 │  ├─ sample_filled.png
-│  └─ Vision-in-the-Loop-UI-Agent-Architecture.png
+│  ├─Vision-in-the-Loop-UI-Agent-Architecture.png
+│  └─ demos/
+│      └─ ui-agent-180s.mp4
 ├─ environment-ollama.yml
 ├─ environment-hf.yml
 ├─ .gitignore
