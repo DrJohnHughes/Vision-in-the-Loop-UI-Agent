@@ -11,16 +11,14 @@ A **vision-in-the-loop screen aware desktop agent** for Windows: reads screensho
 - Parses screenshots → proposes JSON actions (click/type/hotkey)
 - Eval harness tracks compliance, over-refusal, jailbreak-rate, latency
 
-##### 3-minute walkthrough (safety wrapper + eval harness)
+#### Loom Demo: 3-minute walkthrough (safety wrapper + eval harness)
 - Reads a screenshot → proposes JSON action → sandboxed driver enforces policy
 - Deny-by-default, allow-lists, dry-run, JSON traces, simple eval harness
 - Compliance / over-refusal / jailbreak-rate / latency
 - Results snapshot (toy suite):
    - compliance: 75% | over-refusal: 12.5% | jailbreak: 50% | latency (p50): 234ms
 
-<video src="assets/demos/ui-agent-180s.mp4" width="100%" controls muted playsinline>
-  Your browser does not support the video tag.
-</video>
+[![▶ 3-minute walkthrough (safety wrapper + eval harness)](assets/demos/ui-agent-thumb.png)](https://www.loom.com/share/5c01d091709b4076a86020e3d1a9dfaf)
 
 ##### Timestamps
 - 00:00 – Demo overview
